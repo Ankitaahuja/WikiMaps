@@ -51,20 +51,18 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+  console.log(req.body.email);
   const user = {
     email: req.body.email,
     password: req.body.password,
     user_name: req.body.username
   };
-  DataHelpers.saveUser(user, (err) => {
-    if (err) {
-      res.status(500).json({
-        error: err.message
-      });
-    } else {
-      res.status(201).send();
-    }
-  });
+  console.log(user);
+  knex("users").insert(user)
+  .returning ('*')
+  .then(rows => console.log('success!', rows))
+  .catch(err => console.log('error!', err.message))
+  res.redirect("/login");
 })
 
 // Login page
@@ -73,7 +71,14 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  res.render("login");
+
+  knex('users')
+  .then(function(rows) {
+    if(req.body.email && req.body.password){
+     res.redirect("/");
+    }
+    })
+  .catch(err => console.log('error!', err.message))
 });
 
 
