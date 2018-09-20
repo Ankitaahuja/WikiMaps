@@ -2,17 +2,17 @@
 
 require('dotenv').config();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
-const app         = express();
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
+const bodyParser = require("body-parser");
+const sass = require("node-sass-middleware");
+const app = express();
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const morgan = require('morgan');
+const knexLogger = require('knex-logger');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -26,7 +26,9 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -39,9 +41,51 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 
 // Home page
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+// Home page
 app.get("/", (req, res) => {
   res.render("index");
 });
+``
+// Register page
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.post("/register", (req, res) => {
+  console.log(req.body.email);
+  const user = {
+    email: req.body.email,
+    password: req.body.password,
+    user_name: req.body.username
+  };
+  console.log(user);
+  knex("users").insert(user)
+  .returning ('*')
+  .then(rows => console.log('success!', rows))
+  .catch(err => console.log('error!', err.message))
+  res.redirect("/login");
+})
+
+// Login page
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", (req, res) => {
+
+  knex('users')
+  .then(function(rows) {
+    if(req.body.email && req.body.password){
+     res.redirect("/");
+    }
+    })
+  .catch(err => console.log('error!', err.message))
+});
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
