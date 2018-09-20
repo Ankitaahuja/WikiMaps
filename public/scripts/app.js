@@ -20,6 +20,6 @@ $(() => {
   }).done((users) => {
     for(user of users) {
       //$("<div>").html(user.name).appendTo($("body"));
-    }
+    }XMLDocument
   });;
 });
