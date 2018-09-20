@@ -1,14 +1,11 @@
 "use strict";
-
 require('dotenv').config();
-
 const PORT = process.env.PORT || 8080;
 const ENV = process.env.ENV || "development";
 const express = require("express");
 const bodyParser = require("body-parser");
 const sass = require("node-sass-middleware");
 const app = express();
-
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const morgan = require('morgan');
@@ -24,11 +21,17 @@ app.use(cookieSession({
 // Seperated Routes for each Resource
 //const usersRoutes = require("./routes/users");
 
+app.use(cookieSession({
+  name: 'session',
+  keys: ['anks'],
+  maxAge: 24 * 60 * 60 * 1000 // Cookie Options, 24 hours
+}));
+// Seperated Routes for each Resource
+//const usersRoutes = require("./routes/users");
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
-
 // Log knex SQL queries to STDOUT as well
 //app.use(knexLogger(knex));
 
@@ -43,7 +46,6 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
-
 // Mount all resource routes
 //app.use("/api/users", usersRoutes(knex));
 
@@ -54,14 +56,15 @@ app.get("/register", (req, res) => {
 
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
-});
-``
-// Register page
-app.get("/register", (req, res) => {
-  res.render("register");
+  templateVars = {username: req.session.email};
+  res.render("index", templateVars);
 });
 
+// Register page
+app.get("/register", (req, res) => {
+  templateVars = {username: req.session.email};
+  res.render("register", templateVars);
+});
 app.post("/register", (req, res) => {
 
   knex('users')
@@ -96,12 +99,11 @@ app.post("/register", (req, res) => {
     });
 
 })
-
 // Login page
 app.get("/login", (req, res) => {
-  res.render("login");
+  templateVars = { username: "email" };
+  res.render("login", templateVars);
 });
-
 app.post("/login", (req, res) => {
 //validating if the email already exists in DB
   knex('users')
