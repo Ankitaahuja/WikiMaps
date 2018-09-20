@@ -108,7 +108,8 @@ app.post("/login", (req, res) => {
         console.log(JSON.stringify(rows[0]))
         if (req.body.password === rows[0].password) {
           console.log('Password Matches')
-          req.session.email = req.body.email; //setting the cookies
+          req.session.email = req.body.email;
+          req.session.user_id = rows[0].id; //setting the cookies
           res.redirect('/')
         } else {
           console.log('Password fails')
@@ -125,37 +126,65 @@ app.post("/login", (req, res) => {
 
 });
 
-app.post("/logout", (req, res) => {
-  req.session.email = null;
-  res.redirect('/');
-})
 
 
-app.get("/createmaps", (req, res) => {
+
+app.get("/maps/new", (req, res) => { //this is the route to create new maps
   res.render("createmaps");
 })
 
-app.post("/createmaps", (req, res) => {
-
-  knex("points")
-          .insert(res)
-          .then(function () {
-            res.redirect("/login");
+app.post("/maps", (req, res) => { //this is the route to create new maps
+  var map = {
+    "map_name": req.body.map_name,
+    latitude: 43.6631,
+    longitude: -79.6025,
+    zoomlevel: 8,
+    "user_id": req.session.user_id
+  };
+  knex("maps")
+          .returning('id')
+          .insert(map)
+          .then(function (ids) {
+            console.log(`map id: ${ids[0]}`);
+            console.log('sending response');
+            res.json({id: ids[0]});
           })
           .catch(function (error) {
-            res.send('Error Occurred, Please check your email and try again later ' + error.message);
+            console.log('Error Occurred,  ' + error.message);
+          })
+})
+
+app.post("/points", (req, res) => {
+console.log(req.body);
+var point = req.body;
+point.user_id = req.session.user_id;
+  knex("points")
+          .insert(point)
+          .then(function () {
+            res.send("point added");
+          })
+          .catch(function (error) {
+            console.log('Error Occurred,  ' + error.message);
           })
 
-
+        res.redirect("/maps/:mapid")
 
   //req.body.mapname
   //For all Points [Array]
   //Each Latitude, Longitude, Title, Description
   //Insert Maps
   //Insert Points
-  res.send("map submited successfully for " + req.body.mapname);
+  // res.send("map submited successfully for " + req.body.mapname);
 })
 
+app.get("/maps/:mapid", (req, res) => {
+  res.render("createmaps");
+})
+
+app.post("/logout", (req, res) => {
+  req.session.email = null;
+  res.redirect('/');
+})
 
 
 app.listen(PORT, () => {
