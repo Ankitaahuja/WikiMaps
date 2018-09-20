@@ -104,6 +104,7 @@ app.post("/login", (req, res) => {
                 console.log(JSON.stringify(rows[0]))
                 if(req.body.password === rows[0].password){
                     console.log('Password Matches')
+                    req.session.email =  req.body.email;
                     res.redirect('/')
                 }else{
                     console.log('Password fails')
@@ -120,7 +121,25 @@ app.post("/login", (req, res) => {
 
 });
 
+app.post("/logout", (req, res) => {
+  req.session.email = null;
+  res.redirect('/');
+})
 
+
+app.get("/createmaps", (req, res) => {
+  res.render("createmaps");
+})
+
+app.post("/createmaps", (req, res) => {
+   
+  //req.body.mapname
+  //For all Points [Array]
+  //Each Latitude, Longitude, Title, Description
+  //Insert Maps
+  //Insert Points
+  res.send("map submited successfully for "+req.body.mapname);
+})
 
 
 
