@@ -25,6 +25,7 @@
         //Determine the location where the user has clicked.
         var location = e.latLng;
         pointsArray.push(location);
+        console.log(location);
 
         //Create a marker and placed it on the map.
         var marker = new google.maps.Marker({
@@ -52,20 +53,13 @@
   </head>
   <body>
     <h1>Wiki Maps</h1>
-    <div class="row">
-      <div class="span11">
         <div id="map"></div>
-      </div>
-      <div class="span6">
-        <br>
-        <br>
+      <br>
         <form action="/createmaps" method="POST" >
           <label for="mapname">Enter Map Name</label>
           <br>
           <input id="mapname" name="mapname" placeholder="Map Name" >
           <Button type="submit" value="submit">Submit</Button>
         </form>
-      </div>
-    </div>
   </body>
 </html>

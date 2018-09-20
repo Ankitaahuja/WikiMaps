@@ -16,10 +16,10 @@ const knexLogger = require('knex-logger');
 const cookieSession = require('cookie-session');
 
 app.use(cookieSession({
-    name: 'session',
-    keys: ['yama'],
-    maxAge: 24 * 60 * 60 * 1000 // Cookie Options, 24 hours
-  }));
+  name: 'session',
+  keys: ['anks'],
+  maxAge: 24 * 60 * 60 * 1000 // Cookie Options, 24 hours
+}));
 
 // Seperated Routes for each Resource
 //const usersRoutes = require("./routes/users");
@@ -59,34 +59,36 @@ app.get("/register", (req, res) => {
 
 app.post("/register", (req, res) => {
 
-        knex('users')
-        .where({email:req.body.email})
-        .then(function(rows) {
-            if(rows.length>0){
-              res.send('Sorry User Already exist with the email: '+req.body.email)
-            }else{
+  knex('users')
+    .where({
+      email: req.body.email
+    })
+    .then(function (rows) {
+      if (rows.length > 0) {
+        res.send('Sorry user already exists with the email: ' + req.body.email)
+      } else {
+//after validating if the user (email) already doesnt exists, then insert the data into DB
+        const user = {
+          email: req.body.email,
+          password: req.body.password,
+          user_name: req.body.username
+        };
 
-              const user = {
-                email: req.body.email,
-                password: req.body.password,
-                user_name: req.body.username
-              };
+        knex("users")
+          .insert(user)
+          .then(function () {
+            res.redirect("/login");
+          })
+          .catch(function (error) {
+            res.send('Error Occurred, Please check your email and try again later ' + error.message);
+          })
 
-              knex("users")
-              .insert(user)
-              .then(function(){
-                res.redirect("/login");
-              })
-              .catch(function(error){
-                res.send('Error Occurred, Please check email and try again later '+error.message);
-              })
-    
-            }
-        })
-        .catch(function(error) {
-            console.error(error)
-            res.send('Error Occurred '+error)
-        });
+      }
+    })
+    .catch(function (error) {
+      console.error(error)
+      res.send('Error Occurred ' + error)
+    });
 
 })
 
@@ -96,28 +98,30 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-
-        knex('users')
-        .where({email:req.body.email})
-        .then(function(rows) {
-            if(rows.length>0){
-                console.log(JSON.stringify(rows[0]))
-                if(req.body.password === rows[0].password){
-                    console.log('Password Matches')
-                    req.session.email =  req.body.email;
-                    res.redirect('/')
-                }else{
-                    console.log('Password fails')
-                    res.send('Sorry Incorrect Password, Please try again!')
-                }
-            }else{
-                res.send('No User Found with the email: '+req.body.email)
-            }
-        })
-        .catch(function(error) {
-            console.error(error)
-            res.send('Error Occurred '+error)
-        });
+//validating if the email already exists in DB
+  knex('users')
+    .where({
+      email: req.body.email
+    })
+    .then(function (rows) {
+      if (rows.length > 0) {
+        console.log(JSON.stringify(rows[0]))
+        if (req.body.password === rows[0].password) {
+          console.log('Password Matches')
+          req.session.email = req.body.email; //setting the cookies
+          res.redirect('/')
+        } else {
+          console.log('Password fails')
+          res.send('Sorry, Incorrect Password, Please try again!')
+        }
+      } else {
+        res.send('No User Found with the email: ' + req.body.email)
+      }
+    })
+    .catch(function (error) {
+      console.error(error)
+      res.send('Error Occurred ' + error)
+    });
 
 });
 
@@ -132,13 +136,13 @@ app.get("/createmaps", (req, res) => {
 })
 
 app.post("/createmaps", (req, res) => {
-   
+
   //req.body.mapname
   //For all Points [Array]
   //Each Latitude, Longitude, Title, Description
   //Insert Maps
   //Insert Points
-  res.send("map submited successfully for "+req.body.mapname);
+  res.send("map submited successfully for " + req.body.mapname);
 })
 
 
