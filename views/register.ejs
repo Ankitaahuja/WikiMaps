@@ -1,4 +1,5 @@
-
+<!DOCTYPE html>
+<html lang="en">
   <head>
 
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -9,10 +10,11 @@
 
   </head>
   <body>
+    <h2> Register </h2>
     <div class="container">
       <form class="forms" action="/register" method="POST">
         <div class="form-group">
-          <label for="username">User Name: </label>
+          <label for="username">User name: </label>
           <input id="username" class="form-control" type="text" name="username">
         </div>
         <div class="form-group">
@@ -23,11 +25,12 @@
           <label for="password">Password: </label>
           <input id="password" class="form-control" type="password" name="password">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button class="btn btn-default">Submit</button>
+        <button class="btn btn-default"><a href="/">Cancel</a></button>
+        <br><br>
+        <button class="btn btn-default"><a href="/login">Login</a></button>
       </form>
     </div>
-
-
 
   </body>
 </html>
