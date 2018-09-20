@@ -1,22 +1,22 @@
 var pointsArray = [
-  // {
-  //     latitude: 43.6631,
-  //     longitude: -79.6025,
-  //     title: "Point 1",
-  //     description: "First point"
-  // },
-  // {
-  //     latitude: 43.6631,
-  //     longitude: -79.6025,
-  //     title: "Point 2",
-  //     description: "Second point"
-  // },
-  // {
-  //     latitude: 43.6631,
-  //     longitude: -79.6025,
-  //     title: "Point 3",
-  //     description: "Third point"
-  // }
+  {
+      latitude: 43.6631,
+      longitude: -79.6025,
+      title: "Point 1",
+      description: "First point"
+  },
+  {
+      latitude: 43.6631,
+      longitude: -79.6025,
+      title: "Point 2",
+      description: "Second point"
+  },
+  {
+      latitude: 43.6631,
+      longitude: -79.6025,
+      title: "Point 3",
+      description: "Third point"
+  }
 ];
 
 function initMap () {
@@ -100,7 +100,7 @@ $(document).ready(function () {
     console.log("Error:", error);
   })
 
-})
+})  
 
 function createPoint(point) {
   $.ajax({

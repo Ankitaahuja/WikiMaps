@@ -15,6 +15,16 @@ function initMap() {
     addMarker(event.latLng, map);
   });
 
+$(() => {
+  $.ajax({
+    method: "GET",
+    url: "/api/users"
+  }).done((users) => {
+    for(user of users) {
+      //$("<div>").html(user.name).appendTo($("body"));
+    }XMLDocument
+  });;
+});
     // Add a marker at the center of the map.
     // addMarker(toronto, map);
   }
