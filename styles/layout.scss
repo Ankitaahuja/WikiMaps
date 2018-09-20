@@ -6,9 +6,22 @@ body {
   }
 
   .forms {
+    width: 25%;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    
+    margin: auto;
+
+  }
+
+  #map {
+    display: block;
+    margin: auto;
+    height: 80%;
+    width: 60%;
   }
 }
+
+html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
