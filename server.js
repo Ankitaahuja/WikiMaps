@@ -48,6 +48,11 @@ app.use(express.static("public"));
 //app.use("/api/users", usersRoutes(knex));
 
 // Home page
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+// Home page
 app.get("/", (req, res) => {
   res.render("index");
 });

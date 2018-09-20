@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head><h2>Please Login Here</h2></head>
-   <br>
-   <body style="background-color:rgb(231, 227, 227);">
-    <form action="/login" method="POST" >
+  <head>
 
-      <label for="email">Email ID</label>
-      <br>
-      <input id="email" type="email" name="email" placeholder="email@email.com" >
-      <br><br>
-      <label for="password">Password</label>
-      <br>
-      <input id="password" type="password" name="password" placeholder="password">
-      <br><br>
-      <Button type="Submit" value="Login">Login</Button>
-     
-    </form>
-<h3> New User??? Please Register <a href="/register"> Here</a> </h3>
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <form class="forms" action="/login" method="POST">
+        <div class="form-group">
+          <label for="email">E-mail: </label>
+          <input class="form-control" type="email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password: </label>
+          <input class="form-control" type="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+    <br><br><br>
+    <button class="btn btn-default"><a href="/">Cancel</a></button>
+    <button class="btn btn-default"><a href="/register">Register</a></button>
   </body>
 </html>
