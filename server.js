@@ -137,6 +137,17 @@ app.get("/createmaps", (req, res) => {
 
 app.post("/createmaps", (req, res) => {
 
+  knex("points")
+          .insert(res)
+          .then(function () {
+            res.redirect("/login");
+          })
+          .catch(function (error) {
+            res.send('Error Occurred, Please check your email and try again later ' + error.message);
+          })
+
+
+
   //req.body.mapname
   //For all Points [Array]
   //Each Latitude, Longitude, Title, Description
