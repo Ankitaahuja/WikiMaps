@@ -16,7 +16,7 @@ function initMap() {
   });
 
     // Add a marker at the center of the map.
-    addMarker(toronto, map);
+    // addMarker(toronto, map);
   }
 
   // Adds a marker to the map.
@@ -30,7 +30,7 @@ function initMap() {
     });
   }
 
-  google.maps.event.addDomListener(window, 'load', initialize)
+  // google.maps.event.addDomListener(window, 'load', initialize)
 
 // $(() => {
 //   $.ajax({
