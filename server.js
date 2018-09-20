@@ -11,16 +11,6 @@ const knex = require("knex")(knexConfig[ENV]);
 const morgan = require('morgan');
 const knexLogger = require('knex-logger');
 const cookieSession = require('cookie-session');
-
-app.use(cookieSession({
-  name: 'session',
-  keys: ['anks'],
-  maxAge: 24 * 60 * 60 * 1000 // Cookie Options, 24 hours
-}));
-
-// Seperated Routes for each Resource
-//const usersRoutes = require("./routes/users");
-
 app.use(cookieSession({
   name: 'session',
   keys: ['anks'],
@@ -34,7 +24,6 @@ app.use(cookieSession({
 app.use(morgan('dev'));
 // Log knex SQL queries to STDOUT as well
 //app.use(knexLogger(knex));
-
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({
   extended: true
@@ -48,25 +37,20 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 // Mount all resource routes
 //app.use("/api/users", usersRoutes(knex));
-
 // Home page
 app.get("/register", (req, res) => {
   res.render("register");
 });
-
 // Home page
 app.get("/", (req, res) => {
-  templateVars = {username: req.session.email};
-  res.render("index", templateVars);
+  res.render("index");
 });
-
+``
 // Register page
 app.get("/register", (req, res) => {
-  templateVars = {username: req.session.email};
-  res.render("register", templateVars);
+  res.render("register");
 });
 app.post("/register", (req, res) => {
-
   knex('users')
     .where({
       email: req.body.email
@@ -81,7 +65,6 @@ app.post("/register", (req, res) => {
           password: req.body.password,
           user_name: req.body.username
         };
-
         knex("users")
           .insert(user)
           .then(function () {
@@ -90,19 +73,16 @@ app.post("/register", (req, res) => {
           .catch(function (error) {
             res.send('Error Occurred, Please check your email and try again later ' + error.message);
           })
-
       }
     })
     .catch(function (error) {
       console.error(error)
       res.send('Error Occurred ' + error)
     });
-
 })
 // Login page
 app.get("/login", (req, res) => {
-  templateVars = { username: "email" };
-  res.render("login", templateVars);
+  res.render("login");
 });
 app.post("/login", (req, res) => {
 //validating if the email already exists in DB
@@ -130,15 +110,10 @@ app.post("/login", (req, res) => {
       console.error(error)
       res.send('Error Occurred ' + error)
     });
-
 });
-
-
-
 app.get("/maps/new", (req, res) => { //this is the route to create new maps
   res.render("createmaps");
 })
-
 app.post("/maps", (req, res) => { //this is the route to create new maps
   var map = {
     "map_name": req.body.map_name,
@@ -159,7 +134,6 @@ app.post("/maps", (req, res) => { //this is the route to create new maps
             console.log('Error Occurred,  ' + error.message);
           })
 })
-
 app.post("/points", (req, res) => {
 console.log(req.body);
 var point = req.body;
@@ -172,9 +146,7 @@ point.user_id = req.session.user_id;
           .catch(function (error) {
             console.log('Error Occurred,  ' + error.message);
           })
-
         res.redirect("/maps/:mapid")
-
   //req.body.mapname
   //For all Points [Array]
   //Each Latitude, Longitude, Title, Description
@@ -182,17 +154,13 @@ point.user_id = req.session.user_id;
   //Insert Points
   // res.send("map submited successfully for " + req.body.mapname);
 })
-
 app.get("/maps/:mapid", (req, res) => {
   res.render("createmaps");
 })
-
 app.post("/logout", (req, res) => {
   req.session.email = null;
   res.redirect('/');
 })
-
-
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
