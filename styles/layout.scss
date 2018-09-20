@@ -1,5 +1,4 @@
 body {
-  background-color: #EEE;
 
   h1 {
     color: #244751;
@@ -21,12 +20,12 @@ body {
     position: relative;
   }
   .container {
-    height: 100vh;
+    height: 60vh;
     width: 100vw;
     justify-content: center;
     align-items: center;
-    background-image: url("/map.jpg");
     opacity: 0.5;
+    z-index:0.1;
   }
 
   #map {
@@ -34,6 +33,7 @@ body {
     margin: auto;
     height: 100%;
     width: 100%;
+    z-index:0.2;
   }
   .login-register-form {
     position: absolute;

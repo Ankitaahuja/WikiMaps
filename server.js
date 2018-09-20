@@ -135,7 +135,6 @@ app.post("/login", (req, res) => {
 
 
 
-
 app.get("/maps/new", (req, res) => { //this is the route to create new maps
   res.render("createmaps");
 })
