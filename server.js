@@ -43,6 +43,7 @@ app.get("/register", (req, res) => {
 });
 // Home page
 app.get("/", (req, res) => {
+
   res.render("index");
 });
 ``
@@ -157,7 +158,7 @@ app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RA
               console.log(renderMapPointsArray);
             }
 
-            res.json(renderMapPointsArray); //send the RAW mapPoint data 
+            res.json(renderMapPointsArray); //send the RAW mapPoint data
 
           }).catch(function (error) {
             res.send(error);
