@@ -3,17 +3,17 @@
 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 
-function initMap() {
-  let mapDiv = document.getElementById('map');
-  let map = new google.maps.Map(mapDiv, {
-    zoom: 12,
-    center: new google.maps.LatLng(43.6532, -79.3832)
-  });
-
-  // This event listener calls addMarker() when the map is clicked.
-  // google.maps.event.addListener(map, 'click', function(event) {
-  //   addMarker(event.latLng, map);
-  // });
+// function initMap() {
+//   let mapDiv = document.getElementById('map');
+//   let map = new google.maps.Map(mapDiv, {
+//     zoom: 12,
+//     center: new google.maps.LatLng(43.6532, -79.3832)
+//   });
+//
+//   This event listener calls addMarker() when the map is clicked.
+//   google.maps.event.addListener(map, 'click', function(event) {
+//     addMarker(event.latLng, map);
+//   });
 
 $(() => {
   $.ajax({
@@ -51,4 +51,4 @@ $(() => {
 //     }
 //   });;
 // });
-}
+// }
