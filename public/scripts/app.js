@@ -3,13 +3,6 @@
 var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var labelIndex = 0;
 
-function initMap() {
-  let mapDiv = document.getElementById('map');
-  let map = new google.maps.Map(mapDiv, {
-    zoom: 12,
-    center: new google.maps.LatLng(43.6532, -79.3832)
-  });
-
   // This event listener calls addMarker() when the map is clicked.
   google.maps.event.addListener(map, 'click', function(event) {
     addMarker(event.latLng, map);
@@ -23,16 +16,10 @@ $(() => {
     result.mapsArray.forEach(function(map) {
       $("<li>").html(map.map_name).appendTo($("#dropdown-maps")).contents().wrap(`<a href="#"></a>`);
     })
-    // for(let i = 0; i < mapsArray.length; i++) {
-    //   debugger
-    //   $("<div>").html(mapsArray[i].map_name).appendTo($("body"));
-    //   console.log(mapsArray[i].map_name);
-    // }
   });;
 });
     // Add a marker at the center of the map.
     // addMarker(toronto, map);
-  }
 
   // Adds a marker to the map.
   // function addMarker(location, map) {

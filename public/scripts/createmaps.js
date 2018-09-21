@@ -4,9 +4,9 @@ function initMap () {
     zoom: 10,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  
+
   map = new google.maps.Map(document.getElementById("map"), mapOptions);
- 
+
   google.maps.event.addListener(map, 'click', function (mapPoint) { //point where user will click
     var location = mapPoint.latLng;
     console.log(location.lat());
@@ -16,7 +16,7 @@ function initMap () {
       position: location,
       map: map
     });
-   
+
     google.maps.event.addListener(marker, "click", function (e) {
       var infoWindow = new google.maps.InfoWindow({
         content:
@@ -27,6 +27,7 @@ function initMap () {
           '<input id="title" type="text" name="title" placeholder="title">' +
           '<p>Description</p>' +
           '<input id="description" type="text" name="description" placeholder="description"> <br> <br>' +
+          '<input id="image" type="file" name="image"> <br><br>' +   
           '<button type ="submit" >Update</button>' +
           '</form>'
       });
@@ -45,7 +46,7 @@ function initMap () {
                               title : formData[2].value,
                               description : formData[3].value
                             };
-          console.log(singlePoint); 
+          console.log(singlePoint);
           pointsArray.push(singlePoint);  // the Array of point objects
           infoWindow.close();
          });
@@ -61,7 +62,7 @@ var map;
 $(document).ready(function () {
 
   $(".map-info").on("submit", function (ev) {
-    ev.preventDefault(); 
+    ev.preventDefault();
 
     var mapinfo = $(this).serializeArray(); //mapinfo from mapform gives only the name of map
     console.log(mapinfo);
@@ -69,14 +70,13 @@ $(document).ready(function () {
     var longitude = map.getCenter().lng();
     var zoomValue = map.getZoom();
     var mapdata = {mapname: mapinfo[0].value,
-                  lat:latitude, 
-                  lng: longitude, 
+                  lat:latitude,
+                  lng: longitude,
                   zoom: zoomValue};
-    console.log(mapdata);  
-   
-      debugger;
+    console.log(mapdata);
+
     $.ajax({
-        url: "/maps", 
+        url: "/maps",
         method: "POST",
         data: mapdata
       }).then(function (response) {
@@ -90,18 +90,18 @@ $(document).ready(function () {
             // redirect to the new map page
            window.location.replace(`/maps/${response.id}`);
         }
-        
+
       }).catch(function (error) {
         console.log("Error:", error);
       })
-   
+
    });
 
 })
 
 function createPoint(point,map_id) {
   $.ajax({
-    url: "/points", 
+    url: "/points",
     method: "POST",
     data:{'title':point.title,
     'description':point.description,

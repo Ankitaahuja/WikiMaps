@@ -217,7 +217,6 @@ app.post("/points", (req, res) => {
     'map_id': req.body.map_id
   };
 
-
   knex("points")
     .insert(point)
     .then(function () {

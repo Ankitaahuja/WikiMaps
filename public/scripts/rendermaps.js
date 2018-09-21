@@ -10,6 +10,7 @@ function initMap () { //will give the blank map
 var map;
 
 $(document).ready(function () {
+  initMap();
   var url = window.location.pathname; //gives the current URL
   var id = url.substring(url.lastIndexOf('/') + 1); //gives the mapID
   $.ajax({
@@ -63,4 +64,3 @@ function loadMapData(response){
       })(marker, i));
     }
 }
-
