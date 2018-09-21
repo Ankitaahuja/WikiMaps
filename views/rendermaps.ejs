@@ -3,19 +3,22 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>User Maps</title>
-    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/scripts/rendermaps.js"></script>
-    <link rel="stylesheet" type="text/css" href="/styles/maps.css" />
-    
+    <link   rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+    <link   rel="stylesheet" type="text/css" href="/styles/maps.css" />
   </head>
   <body>
-    <button class="fav-button" data-map-id="<%= mapId %>">Favorite</button>
-    <h1>User Maps</h1>
+       <header>
+          <button class="fav-button" data-map-id="<%= mapId %>">Favorite</button>
+        <% include ./partials/header  %>
+      </header>
         <div id="map"></div>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGLhbGp_NKsXKsWXDG2eAhelTgNmmAx4&callback=initMap"
-    async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGLhbGp_NKsXKsWXDG2eAhelTgNmmAx4&callback=initMap" async defer></script>
     <p class='map-name'></p>
   </body>
 </html>

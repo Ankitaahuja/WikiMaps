@@ -1,5 +1,19 @@
-body {
 
+ .fav-button{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 200%;
+    border-radius: 5px;
+    width: 120px;
+    height: 60px;
+    margin-top:5px;
+    background-color:white;
+    z-index:3;
+    right:100px;
+    position:fixed
+  }
+
+
+body {
   h1 {
     color: #244751;
     text-align: center;
@@ -23,6 +37,7 @@ body {
     z-index: 1;
     height: 550px;
   }
+
   .container {
     height: 60vh;
     width: 100vw;
@@ -111,7 +126,6 @@ body {
     font-family: "Times New Roman", Times, serif;
     font-size: 200%;
     border-radius: 5px;
-    width: 120px;
     height: 60px;
     float: right;
     margin-right: 20px;
@@ -125,4 +139,6 @@ body {
     opacity: 1;
     color: black;
   }
+
 }
+
