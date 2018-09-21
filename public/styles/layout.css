@@ -1,0 +1,129 @@
+body h1 {
+  color: #244751;
+  text-align: center;
+}
+
+body .forms {
+  width: 25%;
+  height: 70%;
+  padding: 1em;
+  background-color: #00a087;
+  opacity: 1;
+  z-index: 1;
+}
+
+body .forms h2 {
+  text-align: center;
+}
+
+body .form-container {
+  position: absolute;
+  z-index: 1;
+  height: 550px;
+}
+
+body .container {
+  height: 60vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+}
+
+body #map {
+  display: block;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+}
+
+body .login-register-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-bar {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 80px;
+  color: #e8fdff;
+  background-color: #00a087;
+  z-index: 1;
+  display: inline;
+  text-align: center;
+}
+
+.nav-bar .drop {
+  font-family: "Times New Roman", Times, serif;
+  background-color: black;
+  color: white;
+  padding-top: 10px;
+  float: left;
+  color: white;
+  font-size: 150%;
+  z-index: 2;
+  height: 60px;
+}
+
+.nav-bar .drop-items {
+  color: white;
+  font-size: 150%;
+  padding-left: 18px;
+}
+
+.nav-bar .drop-down-maps {
+  font-family: "Times New Roman", Times, serif;
+  background-color: black;
+  color: white;
+  opacity: 1;
+  margin: 0px;
+  padding-top: 15px;
+  float: left;
+  color: white;
+  font-size: 180%;
+  z-index: 2;
+  height: 70px;
+}
+
+.nav-bar .drop-down-maps:hover {
+  color: white;
+  background-color: black;
+}
+
+.nav-bar .div1 {
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+  font-size: 350%;
+  display: inline-block;
+  opacity: 1;
+  margin-top: 5px;
+}
+
+.nav-bar #button {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 200%;
+  border-radius: 5px;
+  width: 120px;
+  height: 60px;
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
+  opacity: 1;
+  color: black;
+  background-color: white;
+}
+
+.nav-bar .login-button:hover {
+  opacity: 1;
+  color: black;
+}
