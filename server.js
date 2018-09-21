@@ -96,7 +96,7 @@ app.post("/login", (req, res) => {
         if (req.body.password === rows[0].password) {
           console.log('Password Matches')
           req.session.email = req.body.email;
-          req.session.user_id = rows[0].id; //setting the cookies
+          req.session.user_id = rows[0].id; //setting the cookies with user Id
           res.redirect('/')
         } else {
           console.log('Password fails')

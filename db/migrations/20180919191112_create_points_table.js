@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
       table.integer('map_id').unsigned();
       table.foreign('map_id').references("id").inTable("maps");
     })
-  ])
+  ]) 
 };
 
 exports.down = function(knex, Promise) {
