@@ -3,24 +3,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Create New Maps</title>
+    <title>User Maps</title>
     <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/scripts/createmaps.js"></script>
+    <script src="/scripts/rendermaps.js"></script>
     <link rel="stylesheet" type="text/css" href="/styles/maps.css" />
     
   </head>
   <body>
-    <h1>Wiki Maps</h1>
+    <h1>User Maps</h1>
         <div id="map"></div>
-      <br>
-        <form class="map-info" action="/maps" method="POST" >
-          <label for="mapname">Enter Map Name</label>
-          <br>
-          <input id="mapname" name="mapname" placeholder="Map Name" >
-          <Button type="submit" value="submit">Submit</Button>
-        </form>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGLhbGp_NKsXKsWXDG2eAhelTgNmmAx4&callback=initMap"
-    async defer></script> 
+    async defer></script>
+    <p class='map-name'></p>
   </body>
 </html>
