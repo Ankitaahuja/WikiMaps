@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <!-- Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+        <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
   <body>
+     <nav class="nav-bar">
+        <div class="div1">
+          <strong>WikiMaps</strong>
+        </div>
+      </nav>
+
+
+
+
     <div class="form-container">
       <div class="container"></div>
       <form class="forms login-register-form" action="/login" method="POST">
@@ -27,10 +35,9 @@
         <button class="btn btn-default"><a href="/">Cancel</a></button>
       </form>
     </div>
-<!--
-     <div id="map"></div>
+
+      <div id="map"></div>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGLhbGp_NKsXKsWXDG2eAhelTgNmmAx4&callback=initMap"
-        async defer>
-        </script> -->
+        async defer></script>
   </body>
 </html>
