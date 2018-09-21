@@ -260,15 +260,12 @@ app.get("/mapslist", (req, res) => { //this is the route to get maps list
 
 app.post("/addfavorites", (req, res) => {
 
-  // req.body.map_id
-  // req.session.user_id
-
-
-
   knex("favorites")
   .insert({user_id:req.session.user_id, map_id:req.body.map_id})
   .then(function () {
-    req.json({user_id:req.session.user_id, map_id:req.body.map_id})
+    // req.json({user_id:req.session.user_id, map_id:req.body.map_id})
+    res.status(201).send()
+    console.log("checking Favs")
   })
   .catch(function (error) {
     res.send('Error Occurred,' + error.message);
@@ -280,6 +277,41 @@ app.post("/logout", (req, res) => {
   req.session.email = null;
   res.redirect('/');
 })
+
+app.get("/user:id", (req, res) => {
+  res.render("user", {userId: req.params.id});
+
+})
+
+app.post("/user:id", (req, res) => {
+  // res.render("user", {userId: req.params.id});
+  knex('users')
+    .where({
+      email: req.body.email
+    })
+    .then(function (rows) {
+      if (rows.length > 0) {
+        console.log(JSON.stringify(rows[0]))
+        if (req.body.password === rows[0].password) {
+          console.log('Password Matches')
+          req.session.email = req.body.email;
+          req.session.user_id = rows[0].id; //setting the cookies with user Id
+          res.redirect('/')
+        } else {
+          console.log('Password fails')
+          res.send('Sorry, Incorrect Password, Please try again!')
+        }
+      } else {
+        res.send('No User Found with the email: ' + req.body.email)
+      }
+    })
+    .catch(function (error) {
+      console.error(error)
+      res.send('Error Occurred ' + error)
+    });
+});
+})
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
