@@ -282,9 +282,38 @@ app.post("/logout", (req, res) => {
   res.redirect('/');
 })
 
-app.get("/user", (req, res) => {
+app.get("/user:id", (req, res) => {
   res.render("user", {userId: req.params.id});
 
+})
+
+app.post("/user:id", (req, res) => {
+  // res.render("user", {userId: req.params.id});
+  knex('users')
+    .where({
+      email: req.body.email
+    })
+    .then(function (rows) {
+      if (rows.length > 0) {
+        console.log(JSON.stringify(rows[0]))
+        if (req.body.password === rows[0].password) {
+          console.log('Password Matches')
+          req.session.email = req.body.email;
+          req.session.user_id = rows[0].id; //setting the cookies with user Id
+          res.redirect('/')
+        } else {
+          console.log('Password fails')
+          res.send('Sorry, Incorrect Password, Please try again!')
+        }
+      } else {
+        res.send('No User Found with the email: ' + req.body.email)
+      }
+    })
+    .catch(function (error) {
+      console.error(error)
+      res.send('Error Occurred ' + error)
+    });
+});
 })
 
 
