@@ -24,6 +24,20 @@ $(document).ready(function () {
     console.log("Error:", error);
   })
 
+  $(".fav-button").on("click", function (ev) {
+    ev.preventDefault(); 
+    debugger;
+    $.ajax({
+      url: "/addfavorites", 
+      method: "POST",
+      data: {map_id: $(this).data("map-id")}
+    }).then(function (response) {
+
+    }).catch(function (error) {
+      console.log("Error:", error);
+    })
+  });
+
 })
 
 function loadMapData(response){
@@ -50,5 +64,4 @@ function loadMapData(response){
       })(marker, i));
     }
 }
-
 

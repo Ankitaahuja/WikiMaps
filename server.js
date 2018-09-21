@@ -172,7 +172,7 @@ app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RA
 
 app.get("/maps/:id", (req, res) => {
 
-  res.render("rendermaps");
+  res.render("rendermaps", {mapId: req.params.id});
 
 })
 
@@ -230,22 +230,6 @@ app.post("/points", (req, res) => {
 })
 
 
-app.post("/addfavorites", (req, res) => {
-
-  // req.body.map_id
-  // req.session.user_id
-
-  // knex("favorites")
-  // .insert({user_id:req.session.user_id, map_id:req.body.map_id})
-  // .then(function () {
-  //   req.send()
-  // })
-  // .catch(function (error) {
-  //   res.send('Error Occurred,' + error.message);
-  // })
-
-})
-
 app.get("/mapslist", (req, res) => { //this is the route to get maps list
   //on client side, it will be an ajax call
   //return list of maps
@@ -271,6 +255,24 @@ app.get("/mapslist", (req, res) => { //this is the route to get maps list
     }).catch(function (error) {
       res.send(error);
     });
+
+})
+
+app.post("/addfavorites", (req, res) => {
+
+  // req.body.map_id
+  // req.session.user_id
+
+
+
+  knex("favorites")
+  .insert({user_id:req.session.user_id, map_id:req.body.map_id})
+  .then(function () {
+    req.json({user_id:req.session.user_id, map_id:req.body.map_id})
+  })
+  .catch(function (error) {
+    res.send('Error Occurred,' + error.message);
+  })
 
 })
 

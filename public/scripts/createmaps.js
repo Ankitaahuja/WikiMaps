@@ -74,7 +74,7 @@ $(document).ready(function () {
                   zoom: zoomValue};
     console.log(mapdata);  
    
-
+      debugger;
     $.ajax({
         url: "/maps", 
         method: "POST",
