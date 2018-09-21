@@ -310,7 +310,6 @@ app.post("/user:id", (req, res) => {
       res.send('Error Occurred ' + error)
     });
 });
-})
 
 
 app.listen(PORT, () => {
