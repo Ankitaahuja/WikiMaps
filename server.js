@@ -282,6 +282,12 @@ app.post("/logout", (req, res) => {
   res.redirect('/');
 })
 
+app.get("/user", (req, res) => {
+  res.render("user", {userId: req.params.id});
+
+})
+
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
