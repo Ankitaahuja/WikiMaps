@@ -118,9 +118,8 @@ app.get("/maps/new", (req, res) => { //this is the route to create new maps
 })
 
 
-
-app.get("/maps/:id", (req, res) => { 
-
+app.get("/maps/data/:id", (req, res) => { //this is the route to create new maps
+ 
   var renderMapPointsArray = {};
   var mapID = req.params.id;
 
@@ -170,7 +169,11 @@ app.get("/maps/:id", (req, res) => {
     }).catch(function(error){
       res.send(error);
     });
-    
+})
+
+app.get("/maps/:id", (req, res) => { 
+
+  res.render("rendermaps");
 
 })
 
