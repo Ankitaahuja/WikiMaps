@@ -18,11 +18,16 @@ function initMap() {
 $(() => {
   $.ajax({
     method: "GET",
-    url: "/api/users"
-  }).done((users) => {
-    for(user of users) {
-      //$("<div>").html(user.name).appendTo($("body"));
-    }XMLDocument
+    url: "/mapslist"
+  }).done((result) => {
+    result.mapsArray.forEach(function(map) {
+      $("<li>").html(map.map_name).appendTo($("#dropdown-maps")).contents().wrap(`<a href="#"></a>`);
+    })
+    // for(let i = 0; i < mapsArray.length; i++) {
+    //   debugger
+    //   $("<div>").html(mapsArray[i].map_name).appendTo($("body"));
+    //   console.log(mapsArray[i].map_name);
+    // }
   });;
 });
     // Add a marker at the center of the map.
