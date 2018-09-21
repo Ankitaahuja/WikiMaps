@@ -84,7 +84,7 @@ $(document).ready(function () {
         if(response.id){ //response.id is the map-ID returned by server
           pointsArray.forEach(function (point) {
               var map_id = response.id;
-              console.log("Ajax for point: "+map_id);
+              console.log("Ajax for point: "+ map_id);
               createPoint(point,map_id); //sending each point info and map_id; function is declared below
             });
             // redirect to the new map page

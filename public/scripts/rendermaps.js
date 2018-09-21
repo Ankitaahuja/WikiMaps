@@ -25,13 +25,14 @@ $(document).ready(function () {
   })
 
   $(".fav-button").on("click", function (ev) {
-    ev.preventDefault();
+    ev.preventDefault(); 
     $.ajax({
       url: "/addfavorites",
       method: "POST",
       data: {map_id: $(this).data("map-id")}
     }).then(function (response) {
-
+      console.log("fav success")
+      window.location.replace("/") //redirects to root page,once we click fav. redirect to UserPage
     }).catch(function (error) {
       console.log("Error:", error);
     })
@@ -57,7 +58,11 @@ function loadMapData(response){
       google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
           var infowindow = new google.maps.InfoWindow();
-          infowindow.setContent(response.pointsArray[i].title);//Add Description, Title and Image using HTML, see the create maps example
+          infowindow.setContent(
+          "<p>Title: " + response.pointsArray[i].title + "</p>"
+                              + "<p>Description: " + response.pointsArray[i].description + "</p>")
+                              // + "<p>Co-ordinates" + response.pointsArray[i].latitude + "</p>")
+                              // "Co-ordinates: " + response.pointsArray[i].latitude)
           infowindow.open(map, marker);
         }
       })(marker, i));

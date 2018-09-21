@@ -261,15 +261,12 @@ app.get("/mapslist", (req, res) => { //this is the route to get maps list
 
 app.post("/addfavorites", (req, res) => {
 
-  // req.body.map_id
-  // req.session.user_id
-
-
-
   knex("favorites")
   .insert({user_id:req.session.user_id, map_id:req.body.map_id})
   .then(function () {
-    req.json({user_id:req.session.user_id, map_id:req.body.map_id})
+    // req.json({user_id:req.session.user_id, map_id:req.body.map_id})
+    res.status(201).send()
+    console.log("checking Favs")
   })
   .catch(function (error) {
     res.send('Error Occurred,' + error.message);
