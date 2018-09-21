@@ -1,112 +1,113 @@
-var pointsArray = [
-  {
-      latitude: 43.6631,
-      longitude: -79.6025,
-      title: "Point 1",
-      description: "First point"
-  },
-  {
-      latitude: 43.6631,
-      longitude: -79.6025,
-      title: "Point 2",
-      description: "Second point"
-  },
-  {
-      latitude: 43.6631,
-      longitude: -79.6025,
-      title: "Point 3",
-      description: "Third point"
-  }
-];
-
 function initMap () {
   var mapOptions = {
     center: new google.maps.LatLng(43.65432, -79.38347),
     zoom: 10,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  //Attach click event handler to the map.
+  
+  map = new google.maps.Map(document.getElementById("map"), mapOptions);
+ 
   google.maps.event.addListener(map, 'click', function (e) {
-    //Determine the location where the user has clicked.
     var location = e.latLng;
-    // var latlongLocation = [location.lat(),location.lng()]
-    // pointsArray.push(latlongLocation);
-    // console.log(pointsArray);
     console.log(location.lat());
     console.log(location.lng());
-    //Create a marker and placed it on the map.
+
     var marker = new google.maps.Marker({
       position: location,
       map: map
     });
-    //Attach click event handler to the marker.
+   
     google.maps.event.addListener(marker, "click", function (e) {
       var infoWindow = new google.maps.InfoWindow({
         content:
-
           '<form class="create-point">' +
           '<input name="latitude" type="hidden" value="' + location.lat() + '" />' +
           '<input name="longitude" type="hidden" value="' + location.lng() + '" />' +
           '<p>Title</p>' +
           '<input id="title" type="text" name="title" placeholder="title">' +
-
           '<p>Description</p>' +
-          '<input id="description" type="text" name="description" placeholder="description">' +
-
+          '<input id="description" type="text" name="description" placeholder="description"> <br> <br>' +
           '<button type ="submit" >Update</button>' +
           '</form>'
-
       });
+
       infoWindow.open(map, marker);
 
       google.maps.event.addListener(infoWindow, 'domready', function () {
-        // $(".create-point").on("submit", function (ev) {
-        //     ev.preventDefault();
-        //       $.ajax({
-        //         url: "/createmaps",
-        //         method: "POST",
-        //         data: pointsArray
 
-        //       }).then(function () {
-        //           console.log("info added")
-        //       })
-        //   })
+        $(".create-point").on("submit", function (ev) {
+          ev.preventDefault();
+          var pointData = $(this).serializeArray();
+          console.log(pointData);
+          var singlePoint = {
+                              latitude:parseFloat(pointData[0].value),
+                              longitude:parseFloat(pointData[1].value),
+                              title:pointData[2].value,
+                              description:pointData[3].value
+                            };
+          console.log(singlePoint);  
+          pointsArray.push(singlePoint);                  
+          infoWindow.close();
+         });
+
       });
     });
   });
 };
 
+var pointsArray = [];
+var map;
 
 $(document).ready(function () {
-  return;
-  // ajax POST to /maps -> receive map ID
-  // then for each point: ajax POST to /points with point information, map ID, and user ID
-  $.ajax({
-    url: "/maps", //intermediate route to get the map id
-    method: "POST",
-    data: {
-      map_name: "Test map"
-    }
-  }).then(function (response) {
-    console.log("after POST to /maps", response);
-    pointsArray.forEach(function (point) {
-      point.map_id = response.id;
-      createPoint(point);
-    });
-    // redirect to the new map page
-    window.location.replace(`/maps/${response.id}`)
-  }).catch(function (error) {
-    console.log("Error:", error);
-  })
 
-})  
+  $(".map-info").on("submit", function (ev) {
+    ev.preventDefault(); 
 
-function createPoint(point) {
+    var mapinfo = $(this).serializeArray();
+    console.log(mapinfo);
+    var latitude = map.getCenter().lat();
+    var longitude = map.getCenter().lng();
+    var zoomValue = map.getZoom();
+    var mapdata = {mapname:mapinfo[0].value,
+                  lat:latitude, 
+                  lng: longitude, 
+                  zoom: zoomValue};
+    console.log(mapdata);  
+   
+
+    $.ajax({
+        url: "/maps", 
+        method: "POST",
+        data: mapdata
+      }).then(function (response) {
+        console.log("after POST to /maps", response);
+        if(response.id){
+          pointsArray.forEach(function (point) {
+              var map_id = response.id;
+              console.log("Ajax for point: "+map_id);
+              createPoint(point,map_id);
+            });
+            // redirect to the new map page
+           window.location.replace(`/maps/${response.id}`);
+        }
+        
+      }).catch(function (error) {
+        console.log("Error:", error);
+      })
+   
+   });
+
+})
+
+function createPoint(point,map_id) {
   $.ajax({
-    url: "/points", //intermediate route to get the map id
+    url: "/points", 
     method: "POST",
-    data: point
+    data:{'title':point.title,
+    'description':point.description,
+    'latitude':point.latitude,
+    'longitude':point.longitude,
+    'map_id':map_id}
   }).then(function () {
     console.log("one point created")
     // should see the map ID

@@ -111,17 +111,81 @@ app.post("/login", (req, res) => {
       res.send('Error Occurred ' + error)
     });
 });
+
+
 app.get("/maps/new", (req, res) => { //this is the route to create new maps
   res.render("createmaps");
 })
+
+
+
+app.get("/maps/:id", (req, res) => { 
+
+  var renderMapPointsArray = {};
+  var mapID = req.params.id;
+
+  knex('maps')
+    .where({
+      id: mapID //map id taken from request params
+    })
+    .then(function (maprows) {
+      if (maprows.length > 0) {
+        renderMapPointsArray['map_name'] = maprows[0].map_name;
+        renderMapPointsArray['map_latitude'] = maprows[0].latitude;
+        renderMapPointsArray['map_longitude'] = maprows[0].longitude;
+        renderMapPointsArray['map_zoomlevel'] = maprows[0].zoomlevel;
+        renderMapPointsArray['user_id'] = maprows[0].user_id;
+        console.log(renderMapPointsArray);
+
+          knex('points')
+          .where({
+            map_id: mapID //map id taken from request params
+          })
+          .then(function (pointrows) {
+            console.log('Points Query Results');
+
+            if (pointrows.length > 0) {
+              var pointsArray = [];
+              pointrows.forEach(singlePoint => {
+                var point = {
+                  title:singlePoint.title,
+                  description:singlePoint.description,
+                  latitude:singlePoint.latitude,
+                  longitude:singlePoint.longitude,
+                };
+                pointsArray.push(point);
+              });
+              renderMapPointsArray['pointsArray'] = pointsArray;
+              console.log(renderMapPointsArray);
+            }
+
+            res.json(renderMapPointsArray);
+
+          }).catch(function(error){
+            res.send(error);
+          });
+      }else{
+        res.send("Invalid map id");
+      }
+    }).catch(function(error){
+      res.send(error);
+    });
+    
+
+})
+
 app.post("/maps", (req, res) => { //this is the route to create new maps
-  var map = {
-    "map_name": req.body.map_name,
-    latitude: 43.6631,
-    longitude: -79.6025,
-    zoomlevel: 8,
-    "user_id": req.session.user_id
+  
+  let map = {
+    'map_name': req.body.mapname,
+    'latitude': parseFloat(req.body.lat),
+    'longitude': parseFloat(req.body.lng),
+    'zoomlevel': parseInt(req.body.zoom),
+    'user_id': parseInt(req.session.user_id)
   };
+
+  console.log(map);
+
   knex("maps")
           .returning('id')
           .insert(map)
@@ -132,35 +196,41 @@ app.post("/maps", (req, res) => { //this is the route to create new maps
           })
           .catch(function (error) {
             console.log('Error Occurred,  ' + error.message);
+            res.send(error.message);
           })
 })
+
+
 app.post("/points", (req, res) => {
-console.log(req.body);
-var point = req.body;
-point.user_id = req.session.user_id;
-  knex("points")
+
+  let point = {'title':req.body.title,
+              'description':req.body.description,
+              'latitude':parseFloat(req.body.latitude),
+              'longitude':parseFloat(req.body.longitude),
+              'user_id': parseInt(req.session.user_id),
+              'map_id':req.body.map_id};
+ 
+
+    knex("points")
           .insert(point)
           .then(function () {
+            console.log('point added');
             res.send("point added");
           })
           .catch(function (error) {
             console.log('Error Occurred,  ' + error.message);
+            res.send(error.message);
           })
-        res.redirect("/maps/:mapid")
-  //req.body.mapname
-  //For all Points [Array]
-  //Each Latitude, Longitude, Title, Description
-  //Insert Maps
-  //Insert Points
-  // res.send("map submited successfully for " + req.body.mapname);
+      
+  
 })
-app.get("/maps/:mapid", (req, res) => {
-  res.render("createmaps");
-})
+
+
 app.post("/logout", (req, res) => {
   req.session.email = null;
   res.redirect('/');
 })
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
