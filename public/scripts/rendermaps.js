@@ -13,22 +13,21 @@ $(document).ready(function () {
   var url = window.location.pathname; //gives the current URL
   var id = url.substring(url.lastIndexOf('/') + 1); //gives the mapID
   $.ajax({
-    url: "/maps/data/"+ id,   
+    url: "/maps/data/"+ id,
     method: "GET"
   }).then(function (response) {
 
-    console.log(response); 
+    console.log(response);
     loadMapData(response);
-  
+
   }).catch(function (error) {
     console.log("Error:", error);
   })
 
   $(".fav-button").on("click", function (ev) {
-    ev.preventDefault(); 
-    debugger;
+    ev.preventDefault();
     $.ajax({
-      url: "/addfavorites", 
+      url: "/addfavorites",
       method: "POST",
       data: {map_id: $(this).data("map-id")}
     }).then(function (response) {
@@ -46,10 +45,10 @@ function loadMapData(response){
     //var infowindow = new google.maps.InfoWindow();
     var marker;
     var i;
-    
+
     //https://stackoverflow.com/questions/3059044/google-maps-js-api-v3-simple-multiple-marker-example
 
-    for (i = 0; i < response.pointsArray.length; i++) {  
+    for (i = 0; i < response.pointsArray.length; i++) {
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(response.pointsArray[i].latitude, response.pointsArray[i].longitude),
         map: map
