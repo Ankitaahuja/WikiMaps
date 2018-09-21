@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments('id');
       table.string("title");
       table.string('description');
+     // table.string('image_url');//add this to save image path,  drop old table and then new table
       table.float('latitude');
       table.float('longitude');
       table.integer('user_id').unsigned();

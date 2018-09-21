@@ -59,7 +59,7 @@ app.post("/register", (req, res) => {
       if (rows.length > 0) {
         res.send('Sorry user already exists with the email: ' + req.body.email)
       } else {
-//after validating if the user (email) already doesnt exists, then insert the data into DB
+        //after validating if the user (email) already doesnt exists, then insert the data into DB
         const user = {
           email: req.body.email,
           password: req.body.password,
@@ -85,7 +85,7 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 app.post("/login", (req, res) => {
-//validating if the email already exists in DB
+  //validating if the email already exists in DB
   knex('users')
     .where({
       email: req.body.email
@@ -112,43 +112,13 @@ app.post("/login", (req, res) => {
     });
 });
 
-
 app.get("/maps/new", (req, res) => { //this is the route to create new maps
   res.render("createmaps");
 })
 
 
-app.get("/mapslist", (req, res) => { //this is the route to create new maps
-  //on client side, it will be an ajax call
-  //return list of maps
-  
-  var renderMapsArray = {};
-  knex('maps')
-          .then(function (mapsrow) {
-            if (mapsrow.length > 0) {
-              var mapsArray = [];
-              mapsrow.forEach(singleMap => {
-                var map = {
-                  map_id:singleMap.id,
-                  map_name:singleMap.map_name
-                };
-                mapsArray.push(map);
-              });
-              renderMapsArray['mapsArray'] = mapsArray;
-              console.log(renderMapsArray);
-            }
-
-            res.json(renderMapsArray); 
-
-          }).catch(function(error){
-            res.send(error);
-      });
-
-})
-
-
 app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RAW data
- 
+
   var renderMapPointsArray = {};
   var mapID = req.params.id;
 
@@ -165,7 +135,7 @@ app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RA
         renderMapPointsArray['user_id'] = maprows[0].user_id;
         console.log(renderMapPointsArray);
 
-          knex('points')
+        knex('points')
           .where({
             map_id: mapID //map id taken from request params
           })
@@ -176,10 +146,10 @@ app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RA
               var pointsArray = [];
               pointrows.forEach(singlePoint => {
                 var point = {
-                  title:singlePoint.title,
-                  description:singlePoint.description,
-                  latitude:singlePoint.latitude,
-                  longitude:singlePoint.longitude,
+                  title: singlePoint.title,
+                  description: singlePoint.description,
+                  latitude: singlePoint.latitude,
+                  longitude: singlePoint.longitude,
                 };
                 pointsArray.push(point);
               });
@@ -189,25 +159,25 @@ app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RA
 
             res.json(renderMapPointsArray); //send the RAW mapPoint data 
 
-          }).catch(function(error){
+          }).catch(function (error) {
             res.send(error);
           });
-      }else{
+      } else {
         res.send("Invalid map id");
       }
-    }).catch(function(error){
+    }).catch(function (error) {
       res.send(error);
     });
 })
 
-app.get("/maps/:id", (req, res) => { 
+app.get("/maps/:id", (req, res) => {
 
   res.render("rendermaps");
 
 })
 
 app.post("/maps", (req, res) => { //this is the route to create new maps
-  
+
   let map = {
     'map_name': req.body.mapname,
     'latitude': parseFloat(req.body.lat),
@@ -219,44 +189,90 @@ app.post("/maps", (req, res) => { //this is the route to create new maps
   console.log(map);
 
   knex("maps")
-          .returning('id')
-          .insert(map)
-          .then(function (ids) {
-            console.log(`map id: ${ids[0]}`);
-            console.log('sending response');
-            res.json({id: ids[0]});
-          })
-          .catch(function (error) {
-            console.log('Error Occurred,  ' + error.message);
-            res.send(error.message);
-          })
+    .returning('id')
+    .insert(map)
+    .then(function (ids) {
+      console.log(`map id: ${ids[0]}`);
+      console.log('sending response');
+      res.json({
+        id: ids[0]
+      });
+    })
+    .catch(function (error) {
+      console.log('Error Occurred,  ' + error.message);
+      res.send(error.message);
+    })
 })
 
 
 app.post("/points", (req, res) => {
 
-  let point = {'title':req.body.title,
-              'description':req.body.description,
-              'latitude':parseFloat(req.body.latitude),
-              'longitude':parseFloat(req.body.longitude),
-              'user_id': parseInt(req.session.user_id),
-              'map_id':req.body.map_id};
- 
+  let point = {
+    'title': req.body.title,
+    'description': req.body.description,
+    'latitude': parseFloat(req.body.latitude),
+    'longitude': parseFloat(req.body.longitude),
+    'user_id': parseInt(req.session.user_id),
+    'map_id': req.body.map_id
+  };
 
-    knex("points")
-          .insert(point)
-          .then(function () {
-            console.log('point added');
-            res.send("point added");
-          })
-          .catch(function (error) {
-            console.log('Error Occurred,  ' + error.message);
-            res.send(error.message);
-          })
-      
-  
+
+  knex("points")
+    .insert(point)
+    .then(function () {
+      console.log('point added');
+      res.send("point added");
+    })
+    .catch(function (error) {
+      console.log('Error Occurred,  ' + error.message);
+      res.send(error.message);
+    })
 })
 
+
+app.post("/addfavorites", (req, res) => {
+
+  // req.body.map_id
+  // req.session.user_id
+
+  // knex("favorites")
+  // .insert({user_id:req.session.user_id, map_id:req.body.map_id})
+  // .then(function () {
+  //   req.send()
+  // })
+  // .catch(function (error) {
+  //   res.send('Error Occurred,' + error.message);
+  // })
+
+})
+
+app.get("/mapslist", (req, res) => { //this is the route to get maps list
+  //on client side, it will be an ajax call
+  //return list of maps
+
+  var renderMapsArray = {};
+  knex('maps')
+    .then(function (mapsrow) {
+      if (mapsrow.length > 0) {
+        var mapsArray = [];
+        mapsrow.forEach(singleMap => {
+          var map = {
+            map_id: singleMap.id,
+            map_name: singleMap.map_name
+          };
+          mapsArray.push(map);
+        });
+        renderMapsArray['mapsArray'] = mapsArray;
+        console.log(renderMapsArray);
+      }
+
+      res.json(renderMapsArray);
+
+    }).catch(function (error) {
+      res.send(error);
+    });
+
+})
 
 app.post("/logout", (req, res) => {
   req.session.email = null;
