@@ -7,12 +7,12 @@ function initMap () {
   
   map = new google.maps.Map(document.getElementById("map"), mapOptions);
  
-  google.maps.event.addListener(map, 'click', function (e) {
-    var location = e.latLng;
+  google.maps.event.addListener(map, 'click', function (mapPoint) { //point where user will click
+    var location = mapPoint.latLng;
     console.log(location.lat());
     console.log(location.lng());
 
-    var marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({ //red marker when the user clicks on the point on map
       position: location,
       map: map
     });
@@ -37,16 +37,16 @@ function initMap () {
 
         $(".create-point").on("submit", function (ev) {
           ev.preventDefault();
-          var pointData = $(this).serializeArray();
-          console.log(pointData);
+          var formData = $(this).serializeArray();
+          console.log(formData);
           var singlePoint = {
-                              latitude:parseFloat(pointData[0].value),
-                              longitude:parseFloat(pointData[1].value),
-                              title:pointData[2].value,
-                              description:pointData[3].value
+                              latitude : parseFloat(formData[0].value),
+                              longitude : parseFloat(formData[1].value),
+                              title : formData[2].value,
+                              description : formData[3].value
                             };
-          console.log(singlePoint);  
-          pointsArray.push(singlePoint);                  
+          console.log(singlePoint); 
+          pointsArray.push(singlePoint);  // the Array of point objects
           infoWindow.close();
          });
 
@@ -63,12 +63,12 @@ $(document).ready(function () {
   $(".map-info").on("submit", function (ev) {
     ev.preventDefault(); 
 
-    var mapinfo = $(this).serializeArray();
+    var mapinfo = $(this).serializeArray(); //mapinfo from mapform gives only the name of map
     console.log(mapinfo);
-    var latitude = map.getCenter().lat();
+    var latitude = map.getCenter().lat(); //comes from google map
     var longitude = map.getCenter().lng();
     var zoomValue = map.getZoom();
-    var mapdata = {mapname:mapinfo[0].value,
+    var mapdata = {mapname: mapinfo[0].value,
                   lat:latitude, 
                   lng: longitude, 
                   zoom: zoomValue};
@@ -81,11 +81,11 @@ $(document).ready(function () {
         data: mapdata
       }).then(function (response) {
         console.log("after POST to /maps", response);
-        if(response.id){
+        if(response.id){ //response.id is the map-ID returned by server
           pointsArray.forEach(function (point) {
               var map_id = response.id;
               console.log("Ajax for point: "+map_id);
-              createPoint(point,map_id);
+              createPoint(point,map_id); //sending each point info and map_id; function is declared below
             });
             // redirect to the new map page
            window.location.replace(`/maps/${response.id}`);

@@ -118,7 +118,36 @@ app.get("/maps/new", (req, res) => { //this is the route to create new maps
 })
 
 
-app.get("/maps/data/:id", (req, res) => { //this is the route to create new maps
+app.get("/mapslist", (req, res) => { //this is the route to create new maps
+  //on client side, it will be an ajax call
+  //return list of maps
+  
+  var renderMapsArray = {};
+  knex('maps')
+          .then(function (mapsrow) {
+            if (mapsrow.length > 0) {
+              var mapsArray = [];
+              mapsrow.forEach(singleMap => {
+                var map = {
+                  map_id:singleMap.id,
+                  map_name:singleMap.map_name
+                };
+                mapsArray.push(map);
+              });
+              renderMapsArray['mapsArray'] = mapsArray;
+              console.log(renderMapsArray);
+            }
+
+            res.json(renderMapsArray); 
+
+          }).catch(function(error){
+            res.send(error);
+      });
+
+})
+
+
+app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RAW data
  
   var renderMapPointsArray = {};
   var mapID = req.params.id;
@@ -158,7 +187,7 @@ app.get("/maps/data/:id", (req, res) => { //this is the route to create new maps
               console.log(renderMapPointsArray);
             }
 
-            res.json(renderMapPointsArray);
+            res.json(renderMapPointsArray); //send the RAW mapPoint data 
 
           }).catch(function(error){
             res.send(error);
