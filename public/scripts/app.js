@@ -24,7 +24,7 @@ $(() => {
       let mapName = $("<li>")
         .append(
           $('<a>').attr('href', `/maps/${map.map_id}`).html(map.map_name)
-        ).appendTo($("#dropdown-maps"));
+        ).appendTo($("#dropdown-maps")).addClass;
     })
   });
 });

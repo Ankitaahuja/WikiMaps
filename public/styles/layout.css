@@ -184,8 +184,37 @@ body {
   padding: 7px;
   color: black;
   background-color: white;
+  color: black;
 }
 
 .nav-bar2 .div2 {
   float: right;
+}
+
+.div4 {
+  float: right;
+}
+
+.btn-btn-logout {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 200%;
+  border-radius: 5px;
+  height: 60px;
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
+  padding: 7px;
+  color: black;
+  background-color: white;
+}
+
+.user-user-email {
+  font-size: 150%;
+  float: right;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+  display: inline-block;
+  opacity: 1;
+  margin-top: 25px;
+  padding-right: 1em;
 }

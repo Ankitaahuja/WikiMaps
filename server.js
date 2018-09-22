@@ -39,12 +39,13 @@ app.use(express.static("public"));
 //app.use("/api/users", usersRoutes(knex));
 // Home page
 app.get("/register", (req, res) => {
-  res.render("register");
+  var loggedIn = {email: req.session.email};
+  res.render("register", loggedIn);
 });
 // Home page
 app.get("/", (req, res) => {
-
-  res.render("index");
+  var loggedIn = {email: req.session.email};
+  res.render("index", loggedIn);
 });
 ``
 // Register page
