@@ -9,6 +9,11 @@ body {
   font-size: 20px;
 }
 
+.map-name {
+  text-align: center;
+  font-size: 35px;
+}
+
 .overlay {
   display: block;
   text-align: center;
