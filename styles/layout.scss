@@ -1,6 +1,6 @@
 
  .create-button{
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 150%;
     border-radius: 5px;
     padding:5px;
@@ -65,6 +65,7 @@ body {
     top: 65%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
+    font-family: 'Comic Sans MS', cursive, sans-serif;
   }
 }
 
@@ -85,9 +86,10 @@ body {
   z-index: 1;
   display: inline;
   text-align: center;
+  
 
   .drop {
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Comic Sans MS", cursive, sans-serif;
     background-color: black;
     color: white;
     padding-top: 10px;
@@ -105,7 +107,7 @@ body {
   }
 
   .drop-down-maps {
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Comic Sans MS", cursive, sans-serif;
     background-color: black;
     color: white;
     opacity: 1;
@@ -131,7 +133,7 @@ body {
   }
 
   #button {
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 200%;
     border-radius: 5px;
     height: 60px;
