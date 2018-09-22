@@ -3,10 +3,10 @@
   font-size: 150%;
   border-radius: 5px;
   padding: 5px;
-  margin-top: 5px;
+  margin-top: 15px;
   background-color: white;
   z-index: 3;
-  right: 100px;
+  right: 40px;
   float: right;
   position: fixed;
 }
@@ -58,8 +58,9 @@ body .halfmap {
 }
 
 body .login-register-form {
+  border-radius: 10px;
   position: absolute;
-  top: 50%;
+  top: 65%;
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
 }
