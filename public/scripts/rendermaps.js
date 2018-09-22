@@ -10,7 +10,6 @@ function initMap () { //will give the blank map
 var map;
 
 $(document).ready(function () {
-  initMap();
   var url = window.location.pathname; //gives the current URL
   var id = url.substring(url.lastIndexOf('/') + 1); //gives the mapID
   $.ajax({
@@ -26,7 +25,7 @@ $(document).ready(function () {
   })
 
   $(".fav-button").on("click", function (ev) {
-    ev.preventDefault(); 
+    ev.preventDefault();
     $.ajax({
       url: "/addfavorites",
       method: "POST",
@@ -52,14 +51,14 @@ function loadMapData(response){
 
     for (i = 0; i < response.pointsArray.length; i++) {
       marker = new google.maps.Marker({
-        position: new google.maps.LatLng(response.pointsArray[i].latitude, response.pointsArray[i].longitude),
-        map: map
-      });
+      position: new google.maps.LatLng(response.pointsArray[i].latitude, response.pointsArray[i].longitude),
+      map: map
+    });
 
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
-        return function() {
-          var infowindow = new google.maps.InfoWindow();
-          infowindow.setContent(
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      return function() {
+        var infowindow = new google.maps.InfoWindow();
+        infowindow.setContent(
           "<p>Title: " + response.pointsArray[i].title + "</p>"
                               + "<p>Description: " + response.pointsArray[i].description + "</p>")
                               // + "<p>Co-ordinates" + response.pointsArray[i].latitude + "</p>")

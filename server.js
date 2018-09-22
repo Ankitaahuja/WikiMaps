@@ -85,6 +85,7 @@ app.post("/register", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login");
 });
+
 app.post("/login", (req, res) => {
   //validating if the email already exists in DB
   knex('users')
@@ -95,10 +96,10 @@ app.post("/login", (req, res) => {
       if (rows.length > 0) {
         console.log(JSON.stringify(rows[0]))
         if (req.body.password === rows[0].password) {
-          console.log('Password Matches')
+          console.log('Password Matches');
           req.session.email = req.body.email;
           req.session.user_id = rows[0].id; //setting the cookies with user Id
-          res.redirect('/')
+          res.redirect('/');
         } else {
           console.log('Password fails')
           res.send('Sorry, Incorrect Password, Please try again!')
@@ -278,12 +279,12 @@ app.post("/logout", (req, res) => {
   res.redirect('/');
 })
 
-app.get("/user:id", (req, res) => {
+app.get("/user/:id", (req, res) => {
   res.render("user", {userId: req.params.id});
 
 })
 
-app.post("/user:id", (req, res) => {
+app.post("/user", (req, res) => {
   // res.render("user", {userId: req.params.id});
   knex('users')
     .where({

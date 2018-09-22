@@ -60,7 +60,6 @@ var pointsArray = [];
 var map;
 
 $(document).ready(function () {
-  initMap();
   $(".map-info").on("submit", function (ev) {
     ev.preventDefault();
 
@@ -80,11 +79,11 @@ $(document).ready(function () {
         method: "POST",
         data: mapdata
       }).then(function (response) {
-        console.log("after POST to /maps", response);
+        // console.log("after POST to /maps", response);
         if(response.id){ //response.id is the map-ID returned by server
           pointsArray.forEach(function (point) {
               var map_id = response.id;
-              console.log("Ajax for point: "+ map_id);
+              console.log("Ajax for point: "+map_id);
               createPoint(point,map_id); //sending each point info and map_id; function is declared below
             });
             // redirect to the new map page
