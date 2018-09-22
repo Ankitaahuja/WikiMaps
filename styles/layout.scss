@@ -1,14 +1,14 @@
 
- .fav-button{
+ .create-button{
     font-family: "Times New Roman", Times, serif;
-    font-size: 200%;
+    font-size: 150%;
     border-radius: 5px;
-    width: 120px;
-    height: 60px;
+    padding:5px;
     margin-top:5px;
     background-color:white;
     z-index:3;
     right:100px;
+    float:right;
     position:fixed
   }
 
@@ -46,10 +46,16 @@ body {
     opacity: 0.5;
   }
 
-  #map {
+  .fullmap {
     display: block;
     margin: auto;
     height: 100%;
+    width: 100%;
+  }
+  .halfmap {
+    display: block;
+    margin: auto;
+    height: 80%;
     width: 100%;
   }
   .login-register-form {

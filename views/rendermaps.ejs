@@ -14,12 +14,12 @@
   <body>
        <header>
           <!--<button class="fav-button" data-map-id="<%= mapId %>">Favorite</button>-->
-          <a class="btn btn-primary" id="button" href='/maps/new'>Create New Map</a>
+          <a class="create-button" href='/maps/new'>Create New Map</a>
         <% include ./partials/header  %>
         
       </header>
      
-        <div id="map"></div>
+        <div id="map" class ="halfmap"></div>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfGLhbGp_NKsXKsWXDG2eAhelTgNmmAx4&callback=initMap" async defer></script>
     <p class='map-name'></p>
   </body>
