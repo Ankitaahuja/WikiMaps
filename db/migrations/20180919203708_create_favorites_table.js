@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
             table.integer('user_id').unsigned();
             table.foreign('user_id').references("id").inTable("users");
             table.integer('map_id').unsigned();
+            table.string('map_name');
             table.foreign('map_id').references("id").inTable("maps");
         })
     ])

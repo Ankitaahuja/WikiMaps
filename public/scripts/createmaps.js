@@ -60,7 +60,7 @@ var pointsArray = [];
 var map;
 
 $(document).ready(function () {
-  initMap();
+ 
   $(".map-info").on("submit", function (ev) {
     ev.preventDefault();
 

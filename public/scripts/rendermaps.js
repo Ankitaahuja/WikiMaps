@@ -10,7 +10,7 @@ function initMap () { //will give the blank map
 var map;
 
 $(document).ready(function () {
-  initMap();
+ 
   var url = window.location.pathname; //gives the current URL
   var id = url.substring(url.lastIndexOf('/') + 1); //gives the mapID
   $.ajax({
@@ -19,8 +19,10 @@ $(document).ready(function () {
   }).then(function (response) {
 
     console.log(response);
-    loadMapData(response);
-
+    if(response.pointsArray){
+      loadMapData(response);
+    }
+    
   }).catch(function (error) {
     console.log("Error:", error);
   })
@@ -30,10 +32,11 @@ $(document).ready(function () {
     $.ajax({
       url: "/addfavorites",
       method: "POST",
-      data: {map_id: $(this).data("map-id")}
+      data: {map_id: $(this).data("map-id"), map_name:$('.map-name').val()}
     }).then(function (response) {
       console.log("fav success")
-      window.location.replace("/") //redirects to root page,once we click fav. redirect to UserPage
+      alert("Maps added to favorites");
+      //window.location.replace("/") //redirects to root page,once we click fav. redirect to UserPage
     }).catch(function (error) {
       console.log("Error:", error);
     })
@@ -43,11 +46,8 @@ $(document).ready(function () {
 
 function loadMapData(response){
   $('.map-name').text("Map Name: "+response.map_name); //render the mapName
-
-    //var infowindow = new google.maps.InfoWindow();
     var marker;
     var i;
-
     //https://stackoverflow.com/questions/3059044/google-maps-js-api-v3-simple-multiple-marker-example
 
     for (i = 0; i < response.pointsArray.length; i++) {
