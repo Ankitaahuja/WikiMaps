@@ -83,7 +83,8 @@ app.post("/register", (req, res) => {
 })
 // Login page
 app.get("/login", (req, res) => {
-  res.render("login");
+  var loggedIn = {email: req.session.email};
+  res.render("login", loggedIn);
 });
 
 app.post("/login", (req, res) => {

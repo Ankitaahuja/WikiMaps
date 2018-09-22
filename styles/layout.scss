@@ -7,9 +7,9 @@
     height: 60px;
     margin-top:5px;
     background-color:white;
-    z-index:3;
-    right:100px;
-    position:fixed
+    z-index: 3;
+    right: 100px;
+    position: fixed;
   }
 
 
@@ -77,6 +77,35 @@ body {
   z-index: 1;
   display: inline;
   text-align: center;
+  padding-left: 18em;
+
+  .user-email {
+    font-size: 150%;
+    float: right;
+    font-family: "Times New Roman", Times, serif;
+    color: black;
+    display: inline-block;
+    opacity: 1;
+    margin-top: 20px;
+    padding-right: 1em;
+  }
+
+  .btn-logout {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 200%;
+    border-radius: 5px;
+    height: 60px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+    padding: 7px;
+    color: black;
+    background-color: white;
+  }
+
+  .div2 {
+    float: right;
+  }
 
   .drop {
     font-family: "Times New Roman", Times, serif;
@@ -141,4 +170,3 @@ body {
   }
 
 }
-

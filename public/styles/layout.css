@@ -74,6 +74,35 @@ body {
   z-index: 1;
   display: inline;
   text-align: center;
+  padding-left: 18em;
+}
+
+.nav-bar .user-email {
+  font-size: 150%;
+  float: right;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+  display: inline-block;
+  opacity: 1;
+  margin-top: 20px;
+  padding-right: 1em;
+}
+
+.nav-bar .btn-logout {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 200%;
+  border-radius: 5px;
+  height: 60px;
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
+  padding: 7px;
+  color: black;
+  background-color: white;
+}
+
+.nav-bar .div2 {
+  float: right;
 }
 
 .nav-bar .drop {

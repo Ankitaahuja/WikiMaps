@@ -2,4 +2,18 @@
    <div class="div1">
      <strong>WikiMaps</strong>
    </div>
+   <% if(email)  { %>
+  <div class="div2">
+    <form action="/logout" method="POST">
+      <input class="btn-logout" type="submit" value="Logout">
+    </form>
+  </div>
+  <div class="user-email">
+     <%= email %>
+  </div>
+  <% } else { %>
+  <div class="btn-logout">
+    <a href="/register">Register</a>
+    <% } %>
+  </div>
  </nav>
