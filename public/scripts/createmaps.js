@@ -27,7 +27,7 @@ function initMap () {
           '<input id="title" type="text" name="title" placeholder="title">' +
           '<p>Description</p>' +
           '<input id="description" type="text" name="description" placeholder="description"> <br> <br>' +
-          '<input id="image" type="file" name="image"> <br><br>' +
+          // '<input id="image" type="file" name="image"> <br><br>' +
           '<button type ="submit" >Update</button>' +
           '</form>'
       });

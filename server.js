@@ -11,6 +11,10 @@ const knex = require("knex")(knexConfig[ENV]);
 const morgan = require('morgan');
 const knexLogger = require('knex-logger');
 const cookieSession = require('cookie-session');
+const fileUpload = require('express-fileupload');
+
+
+app.use(fileUpload());
 app.use(cookieSession({
   name: 'session',
   keys: ['anks'],
@@ -259,7 +263,7 @@ app.get("/mapslist", (req, res) => { //this is the route to get maps list
 
     }).catch(function (error) {
       res.send(error);
-    });
+    }); 
 
 })
 
