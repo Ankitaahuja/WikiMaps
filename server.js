@@ -49,8 +49,10 @@ app.get("/", (req, res) => {
 ``
 // Register page
 app.get("/register", (req, res) => {
-  res.render("register");
+  var loggedIn = {email: req.session.email};
+  res.render("register", loggedIn);
 });
+
 app.post("/register", (req, res) => {
   knex('users')
     .where({
@@ -116,7 +118,8 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/maps/new", (req, res) => { //this is the route to create new maps
-  res.render("createmaps");
+  var loggedIn = {email: req.session.email};
+  res.render("createmaps", loggedIn);
 })
 
 
@@ -174,8 +177,9 @@ app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RA
 })
 
 app.get("/maps/:id", (req, res) => {
+  var loggedIn = {email: req.session.email};
 
-  res.render("rendermaps", {mapId: req.params.id});
+  res.render("rendermaps", {mapId: req.params.id, email: loggedIn.email});
 
 })
 
@@ -277,7 +281,7 @@ app.post("/addfavorites", (req, res) => {
 
 app.post("/logout", (req, res) => {
   req.session.email = null;
-  res.redirect('/');
+  res.redirect("/");
 })
 
 app.get("/user/:id", (req, res) => {
