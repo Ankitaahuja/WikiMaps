@@ -1,5 +1,4 @@
-
- .create-button-render{
+  .create-button-render{
     font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 120%;
     border-radius: 5px;
@@ -14,6 +13,11 @@
     position:fixed;
   }
 
+  .create-button-render:hover{
+    background-color: rgb(205, 184, 184);
+    color: blue;
+  }
+
   .create-button-home{
     font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 120%;
@@ -24,9 +28,13 @@
     padding:5px;
     background-color:white;
     z-index:3;
-
     float:right;
     position:fixed;
+  }
+
+  .create-button-home:hover{
+    background-color: rgb(205, 184, 184);
+    color: blue;
   }
 
   .logout-button{
@@ -43,6 +51,11 @@
     float:left;
     position:fixed  
   }
+  .logout-button:hover{
+    background-color: rgb(205, 184, 184);
+    color: blue;
+  }
+
 .two-button{
   align-content: flex-start
 }
@@ -110,7 +123,6 @@ body {
 }
 
 .nav-bar {
-
   position: absolute;
   top: 0px;
   width: 100%;
@@ -133,6 +145,10 @@ body {
     z-index: 2;
     height: 60px;
   }
+  .drop:hover{
+    background-color: rgb(205, 184, 184);
+    color: blue;
+  }
 
   .drop-items {
     color: white;
@@ -154,8 +170,8 @@ body {
     height: 70px;
   }
   .drop-down-maps:hover {
-    color: white;
-    background-color: black;
+    background-color: rgb(205, 184, 184);
+    color: blue;
   }
   .div1 {
     font-family: "Times New Roman", Times, serif;
@@ -178,6 +194,11 @@ body {
     color: black;
     background-color: white;
     
+  }
+
+  #button:hover{
+    background-color: rgb(205, 184, 184);
+color: blue;
   }
 .username{
   color:black;
