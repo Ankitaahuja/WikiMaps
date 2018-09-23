@@ -1,6 +1,6 @@
 .create-button {
   font-family: "Comic Sans MS", cursive, sans-serif;
-  font-size: 150%;
+  font-size: 120%;
   border-radius: 5px;
   padding: 5px;
   margin-top: 15px;
@@ -9,6 +9,23 @@
   right: 40px;
   float: right;
   position: fixed;
+}
+
+.logout-button {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 120%;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 15px;
+  background-color: white;
+  z-index: 3;
+  right: 40px;
+  float: left;
+  position: fixed;
+}
+
+.two-button {
+  align-content: flex-start;
 }
 
 body h1 {
@@ -53,7 +70,7 @@ body .fullmap {
 body .halfmap {
   display: block;
   margin: auto;
-  height: 80%;
+  height: 75%;
   width: 100%;
 }
 
