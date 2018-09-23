@@ -143,8 +143,15 @@ body {
     opacity: 1;
     color: black;
     background-color: white;
+    
   }
-
+.username{
+  color:black;
+  float: right;
+  padding: 8px;
+  margin:15px
+}
+// logout-button
   .login-button:hover {
     opacity: 1;
     color: black;

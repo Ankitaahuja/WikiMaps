@@ -43,7 +43,15 @@ app.use(express.static("public"));
 // Home page
 app.get("/", (req, res) => {
 
-  res.render("index");
+  let ejsobj;
+  if(req.session.user_name){
+    ejsobj = {user_name:req.session.user_name,
+              isLoggedIn:true}
+  }else{
+    ejsobj = {isLoggedIn:false}
+  }
+  
+  res.render("index", ejsobj);
 });
 
 // Register page
@@ -102,6 +110,7 @@ app.post("/login", (req, res) => {
         console.log(JSON.stringify(rows[0]))
         if (req.body.password === rows[0].password) {
           console.log('Password Matches')
+          req.session.user_name = rows[0].user_name;
           req.session.email = req.body.email;
           req.session.user_id = rows[0].id; //setting the cookies with user Id
           //res.redirect('/user')
@@ -322,6 +331,7 @@ app.get("/getfavorites", (req, res) => {
 
 app.get("/logout", (req, res) => {
   req.session.email = null;
+  req.session.user_name = null;
   console.log('-----logout-----')
   res.redirect('/');
 })

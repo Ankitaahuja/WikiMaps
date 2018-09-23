@@ -20,6 +20,8 @@ $(document).ready(function () {
 
     console.log(response);
     if(response.pointsArray){
+      map.setCenter({lat:response.map_latitude, lng:response.map_longitude});
+      map.setZoom(response.map_zoomlevel);
       loadMapData(response);
     }
     
