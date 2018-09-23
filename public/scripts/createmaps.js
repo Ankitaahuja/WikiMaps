@@ -27,7 +27,7 @@ function initMap () {
           '<input id="title" type="text" name="title" placeholder="title">' +
           '<p>Description</p>' +
           '<input id="description" type="text" name="description" placeholder="description"> <br> <br>' +
-           '<input id="image" type="file" name="image"> <br><br>' +
+          '<input id="image" type="file" name="image"> <br><br>' +
           '<button type ="submit" >Update</button>' +
           '</form>'
       });
@@ -39,11 +39,11 @@ function initMap () {
         $(".create-point").on("submit", function (ev) {
           ev.preventDefault();
 
-
           var formData = $(this).serializeArray();
           console.log(formData);
 
           console.log(currentMapId);
+
           if(currentMapId === undefined){
             console.log("Called createMap");
             createMap();
@@ -72,6 +72,17 @@ function initMap () {
               console.log(singlePoint);
               pointsArray.push(singlePoint);  // the Array of point objects
 
+            },
+            error:function(err){
+              var singlePoint = {
+                latitude : parseFloat(formData[0].value),
+                longitude : parseFloat(formData[1].value),
+                title : formData[2].value,
+                description : formData[3].value,
+                url:'null'
+              };
+              console.log(singlePoint);
+              pointsArray.push(singlePoint); 
             }
           })
 
@@ -131,7 +142,6 @@ $(document).ready(function () {
    $(".map-info").on("submit", function (ev) {
     ev.preventDefault();
 
-  
     pointsArray.forEach(function (point) {
       var map_id = currentMapId;
       console.log("Ajax for point: "+ map_id);
