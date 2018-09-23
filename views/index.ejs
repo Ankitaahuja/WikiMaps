@@ -31,6 +31,7 @@
     <div class="div1">
       <strong style="font-family: 'Comic Sans MS', cursive, sans-serif">WikiMaps</strong>
     </div>
+    
     <ul class="nav navbar-nav drop">
       <li class="dropdown">
         <a class="dropdown-toggle drop-down-maps" data-toggle="dropdown">List of Maps <span class="caret"></span></a>
@@ -43,7 +44,8 @@
     <% } else{ %>  
       <a class="btn btn-primary" id="button" href='/logout'>Logout</a>
       <h3 class="username"> Welcome <%= user_name%>!!</h3>
-      
+      <br> 
+      <a class="create-button" href='/maps/new'>Create New Map</a>
    <% } %>
     
   </nav>

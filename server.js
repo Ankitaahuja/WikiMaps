@@ -11,10 +11,9 @@ const knex = require("knex")(knexConfig[ENV]);
 const morgan = require('morgan');
 const knexLogger = require('knex-logger');
 const cookieSession = require('cookie-session');
-const fileUpload = require('express-fileupload');
+const multer = require('multer');
 
 
-app.use(fileUpload());
 app.use(cookieSession({
   name: 'session',
   keys: ['anks'],
@@ -39,6 +38,33 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+
+
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images/uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now()+'.jpg')
+  }
+});
+let upload = multer({storage: storage});
+
+// app.get('/fileupload', (req, res) => {
+//   res.render('fileupload');
+// });
+//https://alligator.io/nodejs/uploading-files-multer-express/
+// It's very crucial that the file name matches the name attribute in your html
+app.post('/fileupload', upload.single('image'), (req, res) => {
+  const host = req.hostname;
+  const filePath = req.protocol + "://" + host +':'+PORT+ '/images/uploads/' + req.file.filename;
+  console.log(req.file.filename);
+  console.log(filePath);
+  
+  res.json({
+    url: filePath
+  });
+});
 
 // Home page
 app.get("/", (req, res) => {
@@ -150,6 +176,7 @@ app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RA
         renderMapPointsArray['map_longitude'] = maprows[0].longitude;
         renderMapPointsArray['map_zoomlevel'] = maprows[0].zoomlevel;
         renderMapPointsArray['user_id'] = maprows[0].user_id;
+       
         console.log(renderMapPointsArray);
 
         knex('points')
@@ -167,6 +194,7 @@ app.get("/maps/data/:id", (req, res) => { //this is the route which loads the RA
                   description: singlePoint.description,
                   latitude: singlePoint.latitude,
                   longitude: singlePoint.longitude,
+                  image_url:singlePoint.image_url
                 };
                 pointsArray.push(point);
               });
@@ -227,6 +255,7 @@ app.post("/points", (req, res) => {
   let point = {
     'title': req.body.title,
     'description': req.body.description,
+    'image_url': req.body.url,
     'latitude': parseFloat(req.body.latitude),
     'longitude': parseFloat(req.body.longitude),
     'user_id': parseInt(req.session.user_id),
@@ -246,6 +275,33 @@ app.post("/points", (req, res) => {
       res.send(error.message);
     })
 })
+
+/*
+app.post("/points", (req, res) => {
+
+  let point = {
+    'title': req.body.title,
+    'description': req.body.description,
+    'latitude': parseFloat(req.body.latitude),
+    'longitude': parseFloat(req.body.longitude),
+    'user_id': parseInt(req.session.user_id),
+    'map_id': parseInt(req.body.map_id)
+  };
+
+  console.log(point)
+
+  knex("points")
+    .insert(point)
+    .then(function () {
+      console.log('point added');
+      res.send("point added");
+    })
+    .catch(function (error) {
+      console.log(error.message);
+      res.send(error.message);
+    })
+})
+*/
 
 
 app.get("/mapslist", (req, res) => { //this is the route to get maps list

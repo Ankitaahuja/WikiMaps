@@ -63,8 +63,8 @@ function loadMapData(response){
           var infowindow = new google.maps.InfoWindow();
           infowindow.setContent(
           "<p>Title: " + response.pointsArray[i].title + "</p>"
-                              + "<p>Description: " + response.pointsArray[i].description + "</p>")
-                              // + "<p>Co-ordinates" + response.pointsArray[i].latitude + "</p>")
+                              + "<p>Description: " + response.pointsArray[i].description + "</p>"
+                               + "<img src='" + response.pointsArray[i].image_url + "' width='100px' height='100px'>")
                               // "Co-ordinates: " + response.pointsArray[i].latitude)
           infowindow.open(map, marker);
         }

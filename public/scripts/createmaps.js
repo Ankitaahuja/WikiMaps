@@ -20,14 +20,14 @@ function initMap () {
     google.maps.event.addListener(marker, "click", function (e) {
       var infoWindow = new google.maps.InfoWindow({
         content:
-          '<form class="create-point">' +
+          '<form class="create-point" action="/fileupload" enctype="multipart/form-data" method="post">' +
           '<input name="latitude" type="hidden" value="' + location.lat() + '" />' +
           '<input name="longitude" type="hidden" value="' + location.lng() + '" />' +
           '<p>Title</p>' +
           '<input id="title" type="text" name="title" placeholder="title">' +
           '<p>Description</p>' +
           '<input id="description" type="text" name="description" placeholder="description"> <br> <br>' +
-          // '<input id="image" type="file" name="image"> <br><br>' +
+           '<input id="image" type="file" name="image"> <br><br>' +
           '<button type ="submit" >Update</button>' +
           '</form>'
       });
@@ -38,16 +38,43 @@ function initMap () {
 
         $(".create-point").on("submit", function (ev) {
           ev.preventDefault();
+
+
           var formData = $(this).serializeArray();
           console.log(formData);
-          var singlePoint = {
-                              latitude : parseFloat(formData[0].value),
-                              longitude : parseFloat(formData[1].value),
-                              title : formData[2].value,
-                              description : formData[3].value
-                            };
-          console.log(singlePoint);
-          pointsArray.push(singlePoint);  // the Array of point objects
+
+          console.log(currentMapId);
+          if(currentMapId === undefined){
+            console.log("Called createMap");
+            createMap();
+          }
+
+          var form = ev.target;
+          var data = new FormData(form);
+          $.ajax({
+            url: form.action,
+            method: form.method,
+            processData: false,
+            contentType: false,
+            data: data,
+            processData: false,
+            success: function(data){
+
+              console.log(data)
+              console.log(data.url)
+              var singlePoint = {
+                latitude : parseFloat(formData[0].value),
+                longitude : parseFloat(formData[1].value),
+                title : formData[2].value,
+                description : formData[3].value,
+                url:data.url
+              };
+              console.log(singlePoint);
+              pointsArray.push(singlePoint);  // the Array of point objects
+
+            }
+          })
+
           infoWindow.close();
          });
 
@@ -58,9 +85,11 @@ function initMap () {
 
 var pointsArray = [];
 var map;
+var currentMapId;
 
 $(document).ready(function () {
  
+  /*
   $(".map-info").on("submit", function (ev) {
     ev.preventDefault();
 
@@ -97,7 +126,52 @@ $(document).ready(function () {
 
    });
 
+   */
+
+   $(".map-info").on("submit", function (ev) {
+    ev.preventDefault();
+
+  
+    pointsArray.forEach(function (point) {
+      var map_id = currentMapId;
+      console.log("Ajax for point: "+ map_id);
+      createPoint(point,map_id); //sending each point info and map_id; function is declared below
+    });
+    // redirect to the new map page
+   window.location.replace(`/maps/${currentMapId}`);
+  
+
+   });
+
 })
+
+function createMap() {
+
+  var mapnamevalue = $("#mapname").val();
+  console.log('mapnamevalue: '+mapnamevalue);
+    var latitude = map.getCenter().lat(); //comes from google map
+    var longitude = map.getCenter().lng();
+    var zoomValue = map.getZoom();
+    var mapdata = {mapname: mapnamevalue,
+                  lat:latitude,
+                  lng: longitude,
+                  zoom: zoomValue};
+
+  $.ajax({
+    url: "/maps",
+    method: "POST",
+    data:mapdata
+  }).then(function (response) {
+    if(response.id){ //response.id is the map-ID returned by server
+      console.log("one point created");
+      currentMapId = response.id;
+    }
+  
+  }).catch(function (error) {
+    console.log("Error:", error);
+  })
+}
+
 
 function createPoint(point,map_id) {
   $.ajax({
@@ -107,6 +181,7 @@ function createPoint(point,map_id) {
     'description':point.description,
     'latitude':point.latitude,
     'longitude':point.longitude,
+    'url':point.url,
     'map_id':map_id}
   }).then(function () {
     console.log("one point created")
