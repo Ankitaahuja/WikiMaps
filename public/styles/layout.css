@@ -1,12 +1,28 @@
-.create-button {
+.create-button-render {
   font-family: "Comic Sans MS", cursive, sans-serif;
   font-size: 120%;
   border-radius: 5px;
+  top: 10px;
   padding: 5px;
   margin-top: 15px;
   background-color: white;
   z-index: 3;
-  right: 40px;
+  color: black;
+  right: 90px;
+  float: right;
+  position: fixed;
+}
+
+.create-button-home {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 120%;
+  color: black;
+  border-radius: 5px;
+  top: 90px;
+  right: 10px;
+  padding: 5px;
+  background-color: white;
+  z-index: 3;
   float: right;
   position: fixed;
 }
@@ -16,10 +32,12 @@
   font-size: 120%;
   border-radius: 5px;
   padding: 5px;
-  margin-top: 15px;
+  top: 25px;
+  margin-top: 0px;
   background-color: white;
+  color: black;
   z-index: 3;
-  right: 40px;
+  right: 20px;
   float: left;
   position: fixed;
 }
@@ -68,6 +86,7 @@ body .fullmap {
 }
 
 body .halfmap {
+  top: 25px;
   display: block;
   margin: auto;
   height: 75%;
@@ -98,7 +117,7 @@ body {
   color: #e8fdff;
   background-color: #00a087;
   z-index: 1;
-  display: inline;
+  display: block;
   text-align: center;
 }
 
@@ -142,7 +161,7 @@ body {
 .nav-bar .div1 {
   font-family: "Times New Roman", Times, serif;
   color: black;
-  font-size: 350%;
+  font-size: 320%;
   display: inline-block;
   opacity: 1;
   margin-top: 5px;
